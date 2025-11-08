@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use this tutorial, please cite it as below."
+type: software
+title: "PyData 2025 Conference - Bazel AI Packages Tutorial"
+authors:
+  - family-names: Oswal
+    given-names: Ramesh
+  - family-names: Oswal
+    given-names: Jiten
+year: 2025
+month: 11
+abstract: "Tutorial repository containing example codes and exercises for the PyData 2025 conference presentation on Building Bazel Packages for AI/ML: SciPy, PyTorch, and Beyond. This repository provides hands-on examples and practical exercises to complement the main presentation materials."
+keywords:
+  - Bazel
+  - AI/ML
+  - Tutorial
+  - Examples
+  - Exercises
+  - SciPy
+  - PyTorch
+  - TensorFlow
+  - Build Systems
+  - Package Management
+  - Dependency Management
+  - GPU Acceleration
+  - Reproducible Builds
+repository-code: "https://github.com/RameshOswal/pydata-2025-conference-bazel-ai-pkgs-tutorial"
+license: MIT
+references:
+  - type: conference-paper
+    title: "Building Bazel Packages for AI/ML: SciPy, PyTorch, and Beyond"
+    authors:
+      - family-names: Oswal
+        given-names: Ramesh
+      - family-names: Oswal
+        given-names: Jiten
+    conference:
+      name: "PyData Seattle 2025"
+    year: 2025
+    month: 11
