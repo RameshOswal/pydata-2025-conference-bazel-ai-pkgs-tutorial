@@ -1,0 +1,14 @@
+# Bazel configuration for PyData 2025 AI/ML Tutorial
+
+# Enable workspace mode for compatibility with rules_python and pip_parse
+common --enable_workspace
+
+# Define the intel-cuda config that's referenced in user's home .bazelrc
+# This is a minimal definition to prevent the config error
+build:intel-cuda --action_env=CUDA_VISIBLE_DEVICES=""
+
+# Show detailed output for debugging
+build --verbose_failures
+
+# Test configuration  
+test --test_output=errors

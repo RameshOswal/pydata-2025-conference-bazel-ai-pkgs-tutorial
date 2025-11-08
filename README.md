@@ -15,7 +15,12 @@ For the complete presentation materials, slides, and detailed documentation, ple
 
 ```
 ├── README.md                   # This file
+├── WORKSPACE                   # Bazel workspace configuration
+├── BUILD                       # Root BUILD file
+├── .bazelrc                    # Bazel configuration
+├── requirements.txt            # Python dependencies
 ├── examples/                   # Code examples from the tutorial
+│   └── 01-basic-ml-pipeline/   # Basic ML data processing with Bazel
 ├── exercises/                  # Hands-on exercises
 ├── solutions/                  # Solutions to exercises
 └── resources/                  # Additional resources and references
@@ -32,12 +37,24 @@ For the complete presentation materials, slides, and detailed documentation, ple
 ### Setup Instructions
 
 1. Clone this repository:
+
    ```bash
    git clone https://github.com/RameshOswal/pydata-2025-conference-bazel-ai-pkgs-tutorial.git
    cd pydata-2025-conference-bazel-ai-pkgs-tutorial
    ```
 
-2. Follow the examples in order, starting with the basic setup in the `examples/` directory.
+2. Run the first example to verify your setup:
+
+   ```bash
+   # Build the basic ML pipeline example
+   bazel build //examples/01-basic-ml-pipeline:all
+   
+   # Run the data processing example
+   bazel run //examples/01-basic-ml-pipeline:simple_process_data -- \
+     --data_path examples/01-basic-ml-pipeline/data/US-pumpkins.csv
+   ```
+
+3. Follow the examples in order, starting with the basic setup in the `examples/` directory.
 
 ## 📋 Tutorial Contents
 

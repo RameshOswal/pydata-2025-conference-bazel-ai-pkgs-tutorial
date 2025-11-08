@@ -1,0 +1,8 @@
+# Minimal Bazel configuration
+startup --batch
+
+# Disable bzlmod for compatibility
+common --enable_bzlmod=false
+
+# Build configuration
+build --verbose_failures
