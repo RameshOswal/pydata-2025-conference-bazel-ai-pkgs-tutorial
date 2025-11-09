@@ -34,8 +34,41 @@ For the complete presentation materials, slides, and detailed documentation, ple
 ### Prerequisites
 
 - Python 3.8+
-- Bazel 6.0+
+
+- Bazel 6.0+ (via Bazelisk)
 - Basic understanding of Python package management
+
+#### 🛠️ Bazel Installation (via Bazelisk)
+
+Bazelisk is the recommended launcher for Bazel, ensuring you always use the correct Bazel version.
+
+**Ubuntu (20.04/22.04/24.04):**
+
+```bash
+sudo apt update
+sudo apt install curl unzip -y
+curl -LO "https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-linux-amd64"
+sudo mv bazelisk-linux-amd64 /usr/local/bin/bazel
+sudo chmod +x /usr/local/bin/bazel
+bazel --version
+```
+
+**macOS (with Homebrew):**
+
+```bash
+brew install bazelisk
+brew link --overwrite bazelisk
+bazel --version
+```
+
+**Windows (with Chocolatey):**
+
+```powershell
+choco install bazelisk
+bazel --version
+```
+
+> After installation, use the `bazel` command as shown in the examples below.
 
 ### Setup Instructions
 
