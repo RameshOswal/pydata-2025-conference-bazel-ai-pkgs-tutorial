@@ -43,10 +43,12 @@ We use a subset of the US pumpkin market data from the [Microsoft ML-For-Beginne
 
 ```bash
 # Run the simple data processor (no external dependencies)
-bazel run //examples/01-data-processing:simple_process_data
+bazel run //examples/01-data-processing:simple_process_data -- \
+  --data_path examples/01-data-processing/data/US-pumpkins.csv
 
 # Run the advanced data processor (uses pandas, matplotlib)
-bazel run //examples/01-data-processing:process_data
+bazel run //examples/01-data-processing:process_data -- \
+  --data_path examples/01-data-processing/data/US-pumpkins.csv
 
 # Build all targets
 bazel build //examples/01-data-processing:all
