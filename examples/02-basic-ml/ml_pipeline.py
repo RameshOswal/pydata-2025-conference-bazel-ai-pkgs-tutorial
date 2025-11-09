@@ -17,6 +17,7 @@ import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
 from datetime import datetime
+import joblib  # For model serialization
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
@@ -134,7 +135,8 @@ def train_and_evaluate_model(X, y, model_name, model, test_size=0.2, random_stat
         'error_pct': mse/np.mean(pred)*100 if np.mean(pred) != 0 else 0,
         'X_test': X_test,
         'y_test': y_test,
-        'pred': pred
+        'pred': pred,
+        'data_shape': X.shape
     }
 
 
@@ -319,6 +321,72 @@ def save_results_summary(results, best_result, output_dir):
     print(f"Results summary saved to {summary_path}")
 
 
+def save_models(results, output_dir):
+    """Save trained models to disk for later evaluation."""
+    models_dir = os.path.join(output_dir, 'models')
+    os.makedirs(models_dir, exist_ok=True)
+    
+    model_metadata = {}
+    
+    # Results is a list of model results, not a dictionary
+    for i, result in enumerate(results):
+        model_name_parts = result['model_name'].split('_')
+        if len(model_name_parts) >= 2:
+            model_type = model_name_parts[0]
+            feature_set = '_'.join(model_name_parts[1:])
+        else:
+            model_type = result['model_name']
+            feature_set = f"feature_set_{i}"
+        
+        model_key = f"{feature_set}_{model_type}".lower()
+        model_filename = f"{model_key}_model.joblib"
+        model_path = os.path.join(models_dir, model_filename)
+        
+        # Save the model
+        joblib.dump(result['model'], model_path)
+        
+        # Get feature names - need to extract from the model or result
+        feature_names = []
+        if hasattr(result['model'], 'feature_names_in_'):
+            feature_names = list(result['model'].feature_names_in_)
+        elif 'X_test' in result and hasattr(result['X_test'], 'columns'):
+            feature_names = list(result['X_test'].columns)
+        else:
+            # Default feature names based on model name
+            if 'day_only' in result['model_name'].lower():
+                feature_names = ['DayOfYear']
+            elif 'day_month' in result['model_name'].lower():
+                feature_names = ['DayOfYear', 'Month']
+            elif 'variety' in result['model_name'].lower():
+                feature_names = ['Variety_PIE TYPE', 'Variety_MINIATURE', 'Variety_FAIRYTALE', 'Variety_MIXED HEIRLOOM VARIETIES']
+            else:
+                feature_names = [f'feature_{j}' for j in range(getattr(result.get('X_test', []), 'shape', [0, 1])[1])]
+        
+        # Store metadata
+        model_metadata[model_key] = {
+            'model_file': model_filename,
+            'model_type': result['model_name'],
+            'feature_names': feature_names,
+            'performance': {
+                'r2': result['r2'],
+                'rmse': np.sqrt(result['mse']),
+                'mae': result.get('mae', 0)
+            },
+            'training_data_shape': result.get('data_shape', 'unknown')
+        }
+        
+        print(f"Saved model: {model_path}")
+    
+    # Save metadata as JSON
+    import json
+    metadata_path = os.path.join(models_dir, 'model_metadata.json')
+    with open(metadata_path, 'w') as f:
+        json.dump(model_metadata, f, indent=2)
+    
+    print(f"Model metadata saved to: {metadata_path}")
+    return model_metadata
+
+
 def main():
     parser = argparse.ArgumentParser(description='Complete ML pipeline for pumpkin price prediction')
     parser.add_argument('--data_path', default='examples/02-basic-ml/data/US-pumpkins.csv',
@@ -347,8 +415,12 @@ def main():
     # Save results summary
     save_results_summary(results, best_result, args.output_dir)
     
+    # Save trained models for evaluation
+    model_metadata = save_models(results, args.output_dir)
+    
     print("\nML Pipeline analysis complete!")
     print(f"Check {args.output_dir} for detailed results and visualizations.")
+    print(f"Trained models saved in {args.output_dir}/models/")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,8 @@
 load("@rules_python//python:defs.bzl", "py_binary", "py_test")
 
+# Make data files visible to other packages
+exports_files(["data/US-pumpkins.csv"])
+
 # Linear regression example
 py_binary(
     name = "linear_regression",
