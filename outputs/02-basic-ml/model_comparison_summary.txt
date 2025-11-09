@@ -1,0 +1,110 @@
+ML Pipeline Results Summary
+==================================================
+
+All Model Results:
+------------------------------
+Model: Linear_complete
+Features: All features (one-hot encoded categorical)
+MSE: 2.860
+R²: 0.930
+MAE: 1.921
+Error %: 10.6%
+Train Score: 0.941
+
+Model: Polynomial_3_variety_only
+Features: Variety (one-hot encoded)
+MSE: 5.215
+R²: 0.766
+MAE: 3.350
+Error %: 19.8%
+Train Score: 0.763
+
+Model: Polynomial_2_variety_only
+Features: Variety (one-hot encoded)
+MSE: 5.240
+R²: 0.764
+MAE: 3.400
+Error %: 20.0%
+Train Score: 0.757
+
+Model: Linear_variety_only
+Features: Variety (one-hot encoded)
+MSE: 5.299
+R²: 0.758
+MAE: 3.535
+Error %: 19.9%
+Train Score: 0.773
+
+Model: Polynomial_3_day_only
+Features: Day of Year only
+MSE: 10.559
+R²: 0.041
+MAE: 9.220
+Error %: 37.7%
+Train Score: 0.063
+
+Model: Polynomial_2_day_only
+Features: Day of Year only
+MSE: 10.576
+R²: 0.037
+MAE: 9.157
+Error %: 37.7%
+Train Score: 0.060
+
+Model: Polynomial_2_day_month
+Features: Day of Year + Month
+MSE: 10.591
+R²: 0.035
+MAE: 9.145
+Error %: 37.7%
+Train Score: 0.062
+
+Model: Linear_day_only
+Features: Day of Year only
+MSE: 10.595
+R²: 0.034
+MAE: 9.377
+Error %: 37.9%
+Train Score: 0.022
+
+Model: Linear_day_month
+Features: Day of Year + Month
+MSE: 10.606
+R²: 0.032
+MAE: 9.380
+Error %: 37.9%
+Train Score: 0.022
+
+Model: Polynomial_3_day_month
+Features: Day of Year + Month
+MSE: 10.614
+R²: 0.030
+MAE: 9.213
+Error %: 37.9%
+Train Score: 0.067
+
+Model: Polynomial_3_complete
+Features: All features (one-hot encoded categorical)
+MSE: 10762.189
+R²: -996797.298
+MAE: 1377.249
+Error %: -973.3%
+Train Score: 0.977
+
+Model: Polynomial_2_complete
+Features: All features (one-hot encoded categorical)
+MSE: 2103119.881
+R²: -38065727808.402
+MAE: 230849.697
+Error %: 910.9%
+Train Score: 0.903
+
+Best Model:
+---------------
+Model: Linear_complete
+Features: All features (one-hot encoded categorical)
+MSE: 2.860
+R²: 0.930
+MAE: 1.921
+Error %: 10.6%
+Train Score: 0.941
