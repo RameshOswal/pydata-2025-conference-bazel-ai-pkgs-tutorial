@@ -1,14 +1,15 @@
-# Example 1: Basic ML Pipeline with Bazel
+# Data Processing with Bazel
 
-This example demonstrates how to build a machine learning data processing pipeline using Bazel, based on the Microsoft ML-For-Beginners pumpkin price prediction tutorial.
+This example demonstrates fundamental data processing techniques using Bazel for dependency management, based on the Microsoft ML-For-Beginners pumpkin price prediction tutorial.
 
 ## Overview
 
 This tutorial shows how to:
-- Set up Bazel for Python ML projects
-- Manage ML dependencies (pandas, matplotlib, numpy, scikit-learn)
+- Set up Bazel for Python data processing projects
+- Manage data science dependencies (pandas, matplotlib, numpy)
 - Build reproducible data processing pipelines
-- Structure ML code for scalability
+- Handle CSV data with proper preprocessing
+- Create both simple and advanced data processors
 
 ## Dataset
 
@@ -21,10 +22,11 @@ We use a subset of the US pumpkin market data from the [Microsoft ML-For-Beginne
 ## Project Structure
 
 ```
-01-basic-ml-pipeline/
+01-data-processing/
 ├── BUILD                    # Bazel build configuration
-├── data_processor.py        # Main data processing script
-├── test_data_processing.py  # Basic tests
+├── data_processor.py        # Advanced data processing with pandas/matplotlib
+├── simple_processor.py     # Simple data processing (built-in libraries only)
+├── test_data_processing.py  # Unit tests (currently disabled)
 ├── data/
 │   └── US-pumpkins.csv     # Sample pumpkin market data
 └── README.md               # This file
@@ -37,16 +39,20 @@ We use a subset of the US pumpkin market data from the [Microsoft ML-For-Beginne
 - Bazel 6.0+ with Bzlmod support
 - Python 3.11+
 
-### Build the project
+### Build and Run
 
 ```bash
+# Run the simple data processor (no external dependencies)
+bazel run //examples/01-data-processing:simple_process_data
+
+# Run the advanced data processor (uses pandas, matplotlib)
+bazel run //examples/01-data-processing:process_data
+
 # Build all targets
 bazel build //examples/01-data-processing:all
 
-# Build specific targets
-bazel build //examples/01-data-processing:pumpkin_data
-bazel build //examples/01-data-processing:simple_process_data
-bazel build //examples/01-data-processing:advanced_process_data
+# Generate data information
+bazel build //examples/01-data-processing:show_data
 ```
 
 ### Run data processing

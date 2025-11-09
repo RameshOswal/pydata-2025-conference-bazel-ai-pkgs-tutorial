@@ -15,15 +15,18 @@ For the complete presentation materials, slides, and detailed documentation, ple
 
 ```
 ├── README.md                   # This file
-├── WORKSPACE                   # Bazel workspace configuration
-├── BUILD                       # Root BUILD file
+├── WORKSPACE                   # Bazel workspace configuration  
+├── MODULE.bazel               # Bazel bzlmod configuration
+├── BUILD                       # Root BUILD file with filegroups
 ├── .bazelrc                    # Bazel configuration
 ├── requirements.txt            # Python dependencies
-├── examples/                   # Code examples from the tutorial
-│   └── 01-basic-ml-pipeline/   # Basic ML data processing with Bazel
-├── exercises/                  # Hands-on exercises
-├── solutions/                  # Solutions to exercises
-└── resources/                  # Additional resources and references
+├── requirements_lock.txt       # Locked dependency versions
+├── examples/                   # Complete ML pipeline examples
+│   ├── 01-data-processing/     # Data loading and preprocessing
+│   ├── 02-basic-ml/           # Model training and evaluation  
+│   └── 03-model-evaluation/   # Model evaluation and monitoring
+├── outputs/                    # Generated outputs and trained models
+└── evaluation_results/         # Model evaluation results
 ```
 
 ## 🚀 Getting Started
@@ -43,26 +46,52 @@ For the complete presentation materials, slides, and detailed documentation, ple
    cd pydata-2025-conference-bazel-ai-pkgs-tutorial
    ```
 
-2. Run the first example to verify your setup:
+2. Run the examples to verify your setup:
 
    ```bash
-   # Build the basic ML pipeline example
-   bazel build //examples/01-basic-ml-pipeline:all
+   # Run data processing example
+   bazel run //examples/01-data-processing:simple_process_data
    
-   # Run the data processing example
-   bazel run //examples/01-basic-ml-pipeline:simple_process_data -- \
-     --data_path examples/01-basic-ml-pipeline/data/US-pumpkins.csv
+   # Train ML models
+   bazel run //examples/02-basic-ml:ml_pipeline
+   
+   # Evaluate trained models
+   bazel run //examples/03-model-evaluation:model_evaluator
+   
+   # Run tests to verify everything works
+   bazel test //examples/02-basic-ml:test_ml_examples //examples/03-model-evaluation:test_evaluation
    ```
 
-3. Follow the examples in order, starting with the basic setup in the `examples/` directory.
+3. Follow the examples in order: data processing → ML training → model evaluation.
 
 ## 📋 Tutorial Contents
 
-- **Basic Bazel Setup**: Introduction to Bazel for Python projects
-- **AI Package Management**: Managing ML libraries with Bazel
-- **Dependency Resolution**: Handling complex AI package dependencies
-- **Build Optimization**: Optimizing builds for AI/ML workflows
-- **Integration Examples**: Real-world integration scenarios
+### Examples Included
+
+1. **01-data-processing**: Data loading, cleaning, and preprocessing with Bazel
+   - CSV data handling with pandas
+   - Simple vs. advanced data processors
+   - Bazel filegroups for data management
+
+2. **02-basic-ml**: Complete ML training pipeline
+   - Linear and polynomial regression models
+   - Feature engineering and model comparison
+   - Model persistence with joblib
+   - Comprehensive unit testing
+
+3. **03-model-evaluation**: Advanced model evaluation and monitoring
+   - Model loading and performance evaluation
+   - Cross-validation and statistical analysis
+   - Drift detection and model monitoring
+   - Automated evaluation reports
+
+### Key Bazel Concepts Demonstrated
+
+- **bzlmod Configuration**: Modern Bazel dependency management
+- **Python Rules**: py_binary, py_library, py_test targets
+- **Filegroups**: Managing data files and model artifacts  
+- **Runfiles**: Handling file paths in Bazel environments
+- **Testing**: Comprehensive test suites with proper dependencies
 
 ## 🎯 Learning Objectives
 
@@ -104,7 +133,7 @@ year = {2025}
 
 A `CITATION.cff` file is also available in this repository for automated citation tools.
 
-##  License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
