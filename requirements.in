@@ -1,0 +1,5 @@
+# Core ML/Data Science dependencies for PyData 2025 Bazel AI/ML Tutorial
+numpy==1.25.2
+pandas==2.1.4
+matplotlib==3.8.2
+scikit-learn==1.3.2
