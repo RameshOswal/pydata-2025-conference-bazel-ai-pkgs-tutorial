@@ -20,6 +20,7 @@ py_binary(
     ],
     data = [
         "//examples/02-basic-ml:data/US-pumpkins.csv",
+        "//:trained_models",
     ],
 )
 
@@ -51,6 +52,7 @@ py_binary(
     ],
     data = [
         "//examples/02-basic-ml:data/US-pumpkins.csv",
+        "//:trained_models",
     ],
 )
 

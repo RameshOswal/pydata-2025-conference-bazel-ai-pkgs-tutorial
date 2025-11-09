@@ -18,6 +18,43 @@ matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
 from datetime import datetime
 import joblib
+
+
+def find_runfiles_path(relative_path):
+    """Find a file in Bazel runfiles."""
+    # Try runfiles first
+    runfiles_dir = os.environ.get('RUNFILES_DIR')
+    if runfiles_dir:
+        full_path = os.path.join(runfiles_dir, '_main', relative_path)
+        if os.path.exists(full_path):
+            return full_path
+    
+    # Try current directory and parent directories
+    current_dir = os.getcwd()
+    for _ in range(5):  # Try up to 5 levels up
+        test_path = os.path.join(current_dir, relative_path)
+        if os.path.exists(test_path):
+            return test_path
+        current_dir = os.path.dirname(current_dir)
+    
+    # Return the original path as fallback
+    return relative_path
+
+
+def find_models_directory():
+    """Find the models directory, trying different possible locations."""
+    possible_paths = [
+        "outputs/02-basic-ml/models",  # Relative to workspace root
+        "../../../outputs/02-basic-ml/models",  # From bazel runfiles
+        "outputs/02-basic-ml/models",  # Bazel runfiles path
+    ]
+    
+    for path in possible_paths:
+        resolved_path = find_runfiles_path(path)
+        if os.path.exists(resolved_path):
+            return resolved_path
+    
+    return None
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from sklearn.model_selection import cross_val_score, validation_curve
 from sklearn.preprocessing import PolynomialFeatures
@@ -333,21 +370,28 @@ def generate_evaluation_report(models_info, evaluation_results, cv_results, outp
 def main():
     parser = argparse.ArgumentParser(description='Evaluate saved ML models')
     parser.add_argument('--models_dir', 
-                       default='bazel-bin/examples/02-basic-ml/ml_pipeline.runfiles/_main/output/models',
-                       help='Directory containing saved models')
+                       default=None,
+                       help='Directory containing saved models (auto-detected if not provided)')
     parser.add_argument('--data_path', 
                        default='examples/02-basic-ml/data/US-pumpkins.csv',
                        help='Path to evaluation data')
     parser.add_argument('--output_dir', 
-                       default='output_evaluation',
+                       default='evaluation_results',
                        help='Output directory for evaluation results')
     
     args = parser.parse_args()
     
+    # Auto-detect models directory if not provided
+    if args.models_dir is None:
+        args.models_dir = find_models_directory()
+        if args.models_dir is None:
+            print("Error: Could not find models directory. Please run training pipeline first or specify --models_dir")
+            return
+    
     # Handle relative paths
     original_cwd = os.getcwd()
     if not os.path.isabs(args.data_path):
-        args.data_path = os.path.join(original_cwd, args.data_path)
+        args.data_path = find_runfiles_path(args.data_path)
     if not os.path.isabs(args.output_dir):
         args.output_dir = os.path.join(original_cwd, args.output_dir)
     if not os.path.isabs(args.models_dir):

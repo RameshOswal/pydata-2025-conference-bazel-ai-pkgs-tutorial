@@ -24,6 +24,43 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
+def find_runfiles_path(relative_path):
+    """Find a file in Bazel runfiles."""
+    # Try runfiles first
+    runfiles_dir = os.environ.get('RUNFILES_DIR')
+    if runfiles_dir:
+        full_path = os.path.join(runfiles_dir, '_main', relative_path)
+        if os.path.exists(full_path):
+            return full_path
+    
+    # Try current directory and parent directories
+    current_dir = os.getcwd()
+    for _ in range(5):  # Try up to 5 levels up
+        test_path = os.path.join(current_dir, relative_path)
+        if os.path.exists(test_path):
+            return test_path
+        current_dir = os.path.dirname(current_dir)
+    
+    # Return the original path as fallback
+    return relative_path
+
+
+def find_models_directory():
+    """Find the models directory, trying different possible locations."""
+    possible_paths = [
+        "outputs/02-basic-ml/models",  # Relative to workspace root
+        "../../../outputs/02-basic-ml/models",  # From bazel runfiles
+        "outputs/02-basic-ml/models",  # Bazel runfiles path
+    ]
+    
+    for path in possible_paths:
+        resolved_path = find_runfiles_path(path)
+        if os.path.exists(resolved_path):
+            return resolved_path
+    
+    return None
+
+
 def load_data_with_time_splits(data_path, split_date=None):
     """Load data and split into reference and current periods."""
     # Read the data
@@ -389,9 +426,9 @@ def main():
                        help='Path to data file')
     parser.add_argument('--models_dir', 
                        default=None,
-                       help='Directory containing saved models (optional)')
+                       help='Directory containing saved models (auto-detected if not provided)')
     parser.add_argument('--output_dir', 
-                       default='output_drift',
+                       default='drift_analysis',
                        help='Output directory for drift analysis results')
     parser.add_argument('--split_date', 
                        default=None,
@@ -401,10 +438,16 @@ def main():
     
     args = parser.parse_args()
     
+    # Auto-detect models directory if not provided
+    if args.models_dir is None:
+        args.models_dir = find_models_directory()
+        if args.models_dir is None:
+            print("Warning: Could not find models directory. Drift detection will run without model evaluation.")
+    
     # Handle relative paths
     original_cwd = os.getcwd()
     if not os.path.isabs(args.data_path):
-        args.data_path = os.path.join(original_cwd, args.data_path)
+        args.data_path = find_runfiles_path(args.data_path)
     if not os.path.isabs(args.output_dir):
         args.output_dir = os.path.join(original_cwd, args.output_dir)
     if args.models_dir and not os.path.isabs(args.models_dir):

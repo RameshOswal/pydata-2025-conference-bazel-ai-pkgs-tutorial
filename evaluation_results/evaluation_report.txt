@@ -1,0 +1,233 @@
+================================================================================
+MODEL EVALUATION REPORT
+================================================================================
+Generated: 2025-11-09 07:19:06
+
+TRAINING PERFORMANCE SUMMARY
+----------------------------------------
+
+DAY_ONLY_LINEAR (Linear_day_only):
+  Features: 21
+  Training R²: 0.0340
+  Training RMSE: 3.2549
+  Training MAE: 9.3774
+
+2_DAY_ONLY_POLYNOMIAL (Polynomial_2_day_only):
+  Features: 21
+  Training R²: 0.0373
+  Training RMSE: 3.2521
+  Training MAE: 9.1568
+
+3_DAY_ONLY_POLYNOMIAL (Polynomial_3_day_only):
+  Features: 21
+  Training R²: 0.0405
+  Training RMSE: 3.2494
+  Training MAE: 9.2197
+
+DAY_MONTH_LINEAR (Linear_day_month):
+  Features: 21
+  Training R²: 0.0319
+  Training RMSE: 3.2567
+  Training MAE: 9.3797
+
+2_DAY_MONTH_POLYNOMIAL (Polynomial_2_day_month):
+  Features: 21
+  Training R²: 0.0347
+  Training RMSE: 3.2544
+  Training MAE: 9.1448
+
+3_DAY_MONTH_POLYNOMIAL (Polynomial_3_day_month):
+  Features: 21
+  Training R²: 0.0304
+  Training RMSE: 3.2579
+  Training MAE: 9.2125
+
+VARIETY_ONLY_LINEAR (Linear_variety_only):
+  Features: 21
+  Training R²: 0.7584
+  Training RMSE: 2.3019
+  Training MAE: 3.5350
+
+2_VARIETY_ONLY_POLYNOMIAL (Polynomial_2_variety_only):
+  Features: 21
+  Training R²: 0.7637
+  Training RMSE: 2.2891
+  Training MAE: 3.4005
+
+3_VARIETY_ONLY_POLYNOMIAL (Polynomial_3_variety_only):
+  Features: 21
+  Training R²: 0.7659
+  Training RMSE: 2.2837
+  Training MAE: 3.3501
+
+COMPLETE_LINEAR (Linear_complete):
+  Features: 21
+  Training R²: 0.9296
+  Training RMSE: 1.6912
+  Training MAE: 1.9213
+
+2_COMPLETE_POLYNOMIAL (Polynomial_2_complete):
+  Features: 21
+  Training R²: -38065727808.4018
+  Training RMSE: 1450.2137
+  Training MAE: 230849.6972
+
+3_COMPLETE_POLYNOMIAL (Polynomial_3_complete):
+  Features: 21
+  Training R²: -996797.2975
+  Training RMSE: 103.7410
+  Training MAE: 1377.2489
+
+
+EVALUATION PERFORMANCE
+----------------------------------------
+
+DAY_ONLY_LINEAR:
+  Evaluation R²: -1.0748
+  Evaluation RMSE: 146.5225
+  Evaluation MAE: 110.3244
+  Samples: 468
+
+2_DAY_ONLY_POLYNOMIAL:
+  Evaluation R²: -2347934064803193.5000
+  Evaluation RMSE: 4928978910.1515
+  Evaluation MAE: 4915950880.3432
+  Samples: 468
+
+3_DAY_ONLY_POLYNOMIAL:
+  Evaluation R²: -240049369186725.1250
+  Evaluation RMSE: 1576029332.0835
+  Evaluation MAE: 1554625964.8863
+  Samples: 468
+
+DAY_MONTH_LINEAR:
+  Evaluation R²: -1.0524
+  Evaluation RMSE: 145.7297
+  Evaluation MAE: 109.9436
+  Samples: 468
+
+2_DAY_MONTH_POLYNOMIAL:
+  Evaluation R²: -2225077762801140.5000
+  Evaluation RMSE: 4798291280.0125
+  Evaluation MAE: 4785789916.7625
+  Samples: 468
+
+3_DAY_MONTH_POLYNOMIAL:
+  Evaluation R²: -240397975379260.5938
+  Evaluation RMSE: 1577173293.1425
+  Evaluation MAE: 1555716406.4884
+  Samples: 468
+
+VARIETY_ONLY_LINEAR:
+  Evaluation R²: -0.9994
+  Evaluation RMSE: 143.8363
+  Evaluation MAE: 109.1226
+  Samples: 468
+
+2_VARIETY_ONLY_POLYNOMIAL:
+  Evaluation R²: -15100864108770.3320
+  Evaluation RMSE: 395289165.7933
+  Evaluation MAE: 395289165.7933
+  Samples: 468
+
+3_VARIETY_ONLY_POLYNOMIAL:
+  Evaluation R²: -1013652.7575
+  Evaluation RMSE: 102413.8821
+  Evaluation MAE: 102413.8316
+  Samples: 468
+
+COMPLETE_LINEAR:
+  Evaluation R²: -1.1254
+  Evaluation RMSE: 148.2971
+  Evaluation MAE: 109.9518
+  Samples: 468
+
+2_COMPLETE_POLYNOMIAL:
+  Evaluation R²: -7906395390627849.0000
+  Evaluation RMSE: 9044889720.5211
+  Evaluation MAE: 7430719484.0827
+  Samples: 468
+
+3_COMPLETE_POLYNOMIAL:
+  Evaluation R²: -104810465020449.8281
+  Evaluation RMSE: 1041397031.6614
+  Evaluation MAE: 834895778.6368
+  Samples: 468
+
+
+CROSS-VALIDATION RESULTS
+----------------------------------------
+
+DAY_ONLY_LINEAR:
+  CV R² Score: -0.1527 ± 0.0770
+  CV RMSE: 103.3304 ± 16.3326
+
+2_DAY_ONLY_POLYNOMIAL:
+  CV R² Score: -0.4940 ± 0.6411
+  CV RMSE: 119.0747 ± 45.5289
+
+3_DAY_ONLY_POLYNOMIAL:
+  CV R² Score: -0.9927 ± 1.6589
+  CV RMSE: 134.7795 ± 77.4134
+
+DAY_MONTH_LINEAR:
+  CV R² Score: -0.1563 ± 0.0748
+  CV RMSE: 103.4485 ± 16.0448
+
+2_DAY_MONTH_POLYNOMIAL:
+  CV R² Score: -0.5257 ± 0.4853
+  CV RMSE: 120.2928 ± 39.2410
+
+3_DAY_MONTH_POLYNOMIAL:
+  CV R² Score: -15.4679 ± 30.5861
+  CV RMSE: 298.0845 ± 402.5731
+
+VARIETY_ONLY_LINEAR:
+  CV R² Score: -0.1459 ± 0.1031
+  CV RMSE: 102.7533 ± 14.9206
+
+2_VARIETY_ONLY_POLYNOMIAL:
+  CV R² Score: -0.1459 ± 0.1031
+  CV RMSE: 102.7533 ± 14.9206
+
+3_VARIETY_ONLY_POLYNOMIAL:
+  CV R² Score: -0.1459 ± 0.1031
+  CV RMSE: 102.7533 ± 14.9206
+
+COMPLETE_LINEAR:
+  CV R² Score: 0.2600 ± 0.5173
+  CV RMSE: 79.1195 ± 41.5630
+
+2_COMPLETE_POLYNOMIAL:
+  CV R² Score: -1475756544508444.5000 ± 2236322742056619.2500
+  CV RMSE: 2399213499.4810 ± 2185404626.4897
+
+3_COMPLETE_POLYNOMIAL:
+  CV R² Score: -45750317328.5664 ± 91490126612.0981
+  CV RMSE: 7684833.2754 ± 15173985.5377
+
+
+MODEL RANKING (by R² Score)
+----------------------------------------
+1. variety_only_linear: -0.9994
+2. day_month_linear: -1.0524
+3. day_only_linear: -1.0748
+4. complete_linear: -1.1254
+5. 3_variety_only_polynomial: -1013652.7575
+6. 2_variety_only_polynomial: -15100864108770.3320
+7. 3_complete_polynomial: -104810465020449.8281
+8. 3_day_only_polynomial: -240049369186725.1250
+9. 3_day_month_polynomial: -240397975379260.5938
+10. 2_day_month_polynomial: -2225077762801140.5000
+11. 2_day_only_polynomial: -2347934064803193.5000
+12. 2_complete_polynomial: -7906395390627849.0000
+
+
+RECOMMENDATIONS
+----------------------------------------
+Best performing model: variety_only_linear
+This model achieved the highest R² score of -0.9994
+Performance gap to second-best (day_month_linear): 0.0530
+
+Consider the trade-off between model complexity and performance.
+Simpler models may be more interpretable and robust.

@@ -81,12 +81,19 @@ First, train models using the 02-basic-ml pipeline:
 bazel run //examples/02-basic-ml:ml_pipeline
 ```
 
-Then evaluate the saved models:
+Then evaluate the saved models (models directory is auto-detected):
 
 ```bash
-# Evaluate saved models
+# Evaluate saved models - models directory auto-detected from Bazel runfiles
+bazel run //examples/03-model-evaluation:model_evaluator
+
+# Or specify custom output directory
 bazel run //examples/03-model-evaluation:model_evaluator -- \
-  --models_dir bazel-bin/examples/02-basic-ml/ml_pipeline.runfiles/_main/output/models \
+  --output_dir custom_evaluation_results
+
+# Or specify custom models directory
+bazel run //examples/03-model-evaluation:model_evaluator -- \
+  --models_dir /path/to/custom/models \
   --output_dir evaluation_results
 ```
 
@@ -103,10 +110,16 @@ bazel run //examples/03-model-evaluation:cross_validation -- \
 ### Drift Detection
 
 ```bash
-# Monitor for model drift
+# Monitor for model drift - models directory auto-detected
 bazel run //examples/03-model-evaluation:model_drift_detection -- \
   --data_path examples/02-basic-ml/data/US-pumpkins.csv \
-  --models_dir bazel-bin/examples/02-basic-ml/ml_pipeline.runfiles/_main/output/models \
+  --output_dir drift_analysis \
+  --split_date 2017-06-01
+
+# Or specify custom models directory
+bazel run //examples/03-model-evaluation:model_drift_detection -- \
+  --data_path examples/02-basic-ml/data/US-pumpkins.csv \
+  --models_dir /path/to/custom/models \
   --output_dir drift_analysis \
   --split_date 2017-06-01
 ```
