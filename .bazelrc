@@ -1,7 +1,7 @@
 # Bazel configuration for PyData 2025 AI/ML Tutorial
 
-# Enable workspace mode for compatibility with rules_python and pip_parse
-common --enable_workspace
+# Enable bzlmod for modern dependency management
+common --enable_bzlmod
 
 # Define the intel-cuda config that's referenced in user's home .bazelrc
 # This is a minimal definition to prevent the config error

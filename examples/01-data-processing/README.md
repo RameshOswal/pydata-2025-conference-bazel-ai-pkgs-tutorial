@@ -34,33 +34,53 @@ We use a subset of the US pumpkin market data from the [Microsoft ML-For-Beginne
 
 ### Prerequisites
 
-Ensure you have Bazel installed and are in the repository root.
+- Bazel 6.0+ with Bzlmod support
+- Python 3.11+
 
 ### Build the project
 
 ```bash
 # Build all targets
-bazel build //examples/01-basic-ml-pipeline:all
+bazel build //examples/01-data-processing:all
 
 # Build specific targets
-bazel build //examples/01-basic-ml-pipeline:pumpkin_data
-bazel build //examples/01-basic-ml-pipeline:simple_process_data
+bazel build //examples/01-data-processing:pumpkin_data
+bazel build //examples/01-data-processing:simple_process_data
+bazel build //examples/01-data-processing:advanced_process_data
 ```
 
 ### Run data processing
 
+**Simple processor (built-in Python libraries only):**
 ```bash
-# Process the pumpkin data with the simple processor (uses only built-in Python libraries)
-bazel run //examples/01-basic-ml-pipeline:simple_process_data -- \
-  --data_path examples/01-basic-ml-pipeline/data/US-pumpkins.csv
+bazel run //examples/01-data-processing:simple_process_data -- \
+  --data_path examples/01-data-processing/data/US-pumpkins.csv
+```
+
+**Advanced processor (with pandas, numpy, matplotlib):**
+```bash
+# Create output directory
+mkdir -p output
+
+# Run advanced processing with visualizations
+bazel run //examples/01-data-processing:advanced_process_data -- \
+  --data_path examples/01-data-processing/data/US-pumpkins.csv \
+  --output_dir output \
+  --save_processed
+
+# Or use the main target (same as advanced)
+bazel run //examples/01-data-processing:process_data -- \
+  --data_path examples/01-data-processing/data/US-pumpkins.csv \
+  --output_dir output \
+  --save_processed
 ```
 
 ### View data information
 
 ```bash
 # Generate basic data info using shell commands
-bazel build //examples/01-basic-ml-pipeline:show_data
-cat bazel-bin/examples/01-basic-ml-pipeline/data_info.txt
+bazel build //examples/01-data-processing:show_data
+cat bazel-bin/examples/01-data-processing/data_info.txt
 ```
 
 ## Key Bazel Concepts Demonstrated

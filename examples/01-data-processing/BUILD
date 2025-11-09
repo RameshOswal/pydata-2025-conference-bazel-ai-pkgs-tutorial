@@ -20,3 +20,16 @@ py_binary(
     data = [":pumpkin_data"],
     main = "simple_processor.py",
 )
+
+# Update the main process_data target to use the advanced processor
+py_binary(
+    name = "process_data",
+    srcs = ["data_processor.py"],
+    main = "data_processor.py",
+    deps = [
+        "@pypi//pandas",
+        "@pypi//matplotlib",
+        "@pypi//numpy",
+    ],
+    data = [":pumpkin_data"],
+)

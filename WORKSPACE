@@ -1,1 +1,2 @@
-workspace(name = "pydata_bazel_ai_tutorial")
+# This project now uses MODULE.bazel instead of WORKSPACE
+# See MODULE.bazel for dependency configuration

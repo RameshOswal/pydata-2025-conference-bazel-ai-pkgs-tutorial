@@ -5,6 +5,8 @@ Based on Microsoft's ML-For-Beginners tutorial adapted for Bazel.
 """
 
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend for headless operation
 import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime
@@ -62,44 +64,63 @@ def prepare_features(pumpkins: pd.DataFrame) -> pd.DataFrame:
     return new_pumpkins
 
 
-def visualize_data(pumpkins: pd.DataFrame, output_dir: str = ".") -> None:
+def visualize_data(data, output_dir):
     """Create visualizations of the pumpkin data."""
     print("Creating data visualizations...")
     
     # Create output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
+    print(f"Output directory created: {output_dir}")
     
-    # Scatter plot
-    plt.figure(figsize=(10, 6))
-    plt.scatter(pumpkins['Price'], pumpkins['Month'])
-    plt.xlabel('Price ($)')
-    plt.ylabel('Month')
-    plt.title('Pumpkin Prices by Month')
-    plt.savefig(os.path.join(output_dir, 'pumpkin_scatter.png'))
-    plt.close()
-    
-    # Bar chart of average prices by month
-    plt.figure(figsize=(10, 6))
-    monthly_avg = pumpkins.groupby(['Month'])['Price'].mean()
-    monthly_avg.plot(kind='bar')
-    plt.xlabel('Month')
-    plt.ylabel('Average Pumpkin Price ($)')
-    plt.title('Average Pumpkin Prices by Month')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, 'pumpkin_monthly_avg.png'))
-    plt.close()
-    
-    print(f"Visualizations saved to {output_dir}")
+    try:
+        # Create a scatter plot of Low Price vs High Price
+        plt.figure(figsize=(10, 6))
+        plt.scatter(data['Low Price'], data['High Price'], alpha=0.6)
+        plt.xlabel('Low Price ($)')
+        plt.ylabel('High Price ($)')
+        plt.title('Pumpkin Price Analysis: Low vs High Prices')
+        plt.grid(True, alpha=0.3)
+        
+        scatter_path = os.path.join(output_dir, 'pumpkin_scatter.png')
+        plt.savefig(scatter_path)
+        plt.close()
+        print(f"Scatter plot saved to: {scatter_path}")
+        
+        # Create a bar chart of average prices by month
+        monthly_avg = data.groupby('Month')['Price'].mean()
+        plt.figure(figsize=(10, 6))
+        monthly_avg.plot(kind='bar')
+        plt.xlabel('Month')
+        plt.ylabel('Average Price ($)')
+        plt.title('Average Pumpkin Prices by Month')
+        plt.xticks(rotation=0)
+        plt.grid(True, alpha=0.3)
+        
+        bar_path = os.path.join(output_dir, 'pumpkin_monthly_avg.png')
+        plt.savefig(bar_path)
+        plt.close()
+        print(f"Bar chart saved to: {bar_path}")
+        
+        print(f"Visualizations saved to {output_dir}")
+        
+    except Exception as e:
+        print(f"Error creating visualizations: {e}")
+        import traceback
+        traceback.print_exc()
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Process pumpkin market data')
-    parser.add_argument('--data_path', required=True, help='Path to the US-pumpkins.csv file')
-    parser.add_argument('--output_dir', default='.', help='Directory to save outputs')
+    parser = argparse.ArgumentParser(description='Process pumpkin price data')
+    parser.add_argument('--data_path', required=True, help='Path to the pumpkin CSV data file')
+    parser.add_argument('--output_dir', default='outputs', help='Directory to save outputs')
     parser.add_argument('--save_processed', action='store_true', help='Save processed data to CSV')
     
     args = parser.parse_args()
+    
+    # Store the original working directory to ensure outputs go to the right place
+    original_cwd = os.environ.get('BUILD_WORKING_DIRECTORY', os.getcwd())
+    if args.output_dir and not os.path.isabs(args.output_dir):
+        args.output_dir = os.path.join(original_cwd, args.output_dir)
     
     # Load and process data
     raw_data = load_pumpkin_data(args.data_path)
