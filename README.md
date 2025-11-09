@@ -83,7 +83,7 @@ bazel --version
 
    ```bash
    # Run data processing example
-   bazel run //examples/01-data-processing:simple_process_data
+   bazel run //examples/01-data-processing:simple_process_data -- --data_path examples/01-data-processing/data/US-pumpkins.csv
    
    # Train ML models
    bazel run //examples/02-basic-ml:ml_pipeline
